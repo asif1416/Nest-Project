@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Customer } from './customer.entity';
-import { CustomerController } from './customer.controller';
-import { CustomerService } from './customer.service';
+import { Menu } from './menu.entity';
+import { MenuService } from './menu.service';
+import { MenuController } from './menu.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Customer]),
+  imports: [TypeOrmModule.forFeature([Menu]),
   TypeOrmModule.forRoot({
     type: 'postgres',
     host: 'localhost',
@@ -16,8 +16,8 @@ import { CustomerService } from './customer.service';
     entities: [__dirname + '/../**/*.entity{.ts,.js}'],
     synchronize: true,
   }),], 
-  controllers: [ CustomerController], 
-  providers: [CustomerService], 
-  exports: [CustomerService],
+  controllers: [MenuController], 
+  providers: [MenuService], 
+  exports: [MenuService], 
 })
-export class CustomerModule {}
+export class MenuModule {}
