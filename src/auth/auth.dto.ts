@@ -37,10 +37,11 @@ export class AuthDto {
   })
   confirmPassword: string;
 
-  @IsNotEmpty({ message: 'Address is required.' })
+  
+  /*@IsNotEmpty({ message: 'Address is required.' })
   @IsString({ message: 'Address must be a string.' })
   @Length(1, 100, { message: 'Address must be between 1 and 100 characters.' })
-  address: string;
+  address: string;*/
 }
 
 export class VerifyOtpDto {

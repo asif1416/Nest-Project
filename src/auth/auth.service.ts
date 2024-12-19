@@ -26,6 +26,13 @@ export class AuthService {
     });
 
     if (existingCustomer) {
+      if (!existingCustomer.active) {
+        await this.generateAndSendOTP(existingCustomer.email);
+        return {
+          message:
+            'Account exists but is inactive. OTP has been sent for verification.',
+        };
+      }
       throw new BadRequestException('User with this email already exists.');
     }
 
@@ -37,8 +44,19 @@ export class AuthService {
 
     delete createAuthDto.confirmPassword;
 
-    const newCustomer = this.customerRepository.create(createAuthDto);
-    return this.customerRepository.save(newCustomer);
+    const newCustomer = this.customerRepository.create({
+      ...createAuthDto,
+      active: false,
+    });
+
+    await this.customerRepository.save(newCustomer);
+
+    await this.generateAndSendOTP(createAuthDto.email);
+
+    return {
+      message:
+        'Registration successful. Please verify your email with the OTP sent.',
+    };
   }
 
   async signIn(
@@ -50,7 +68,7 @@ export class AuthService {
     });
 
     if (!customer) {
-      throw new UnauthorizedException('Invalid credentials.');
+      throw new UnauthorizedException('User with this email does not exist.');
     }
 
     const isPasswordValid = await bcrypt.compare(password, customer.password);
@@ -169,7 +187,7 @@ export class AuthService {
     customer.otp = null;
     customer.attempt = 0;
     customer.lastReset = null;
-    if(!customer.active) {
+    if (!customer.active) {
       customer.active = true;
     }
 
@@ -186,7 +204,9 @@ export class AuthService {
     }
     const isSamePassword = await bcrypt.compare(password, customer.password);
     if (isSamePassword) {
-      throw new BadRequestException('New password cannot be the same as the old password.');
+      throw new BadRequestException(
+        'New password cannot be the same as the old password.',
+      );
     }
 
     const saltRounds = 10;

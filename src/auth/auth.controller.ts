@@ -62,6 +62,7 @@ export class AuthController {
     });
   }
 
+  @Public()
   @Post('/verify-otp')
   async verifyOTP(
     @Body() verifyOtpDto: VerifyOtpDto,
@@ -75,6 +76,7 @@ export class AuthController {
     };
   }
   
+  @Public()
   @Post('/reset-password')
   async resetPassword(
     @Body() { email, password, confirmPassword }: ResetPasswordDto ,
