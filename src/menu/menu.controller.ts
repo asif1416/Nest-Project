@@ -11,8 +11,13 @@ export class MenuController {
     return this.menuService.getAllMenuItems();
   }
 
+  @Get('/search')
+  async searchItems(@Query('name') name: string): Promise<Menu[]> {
+    return this.menuService.searchMenu(name);
+  }
+
   @Get('/category/:category')
-  async getMenuItemsByCategory(@Param('category') category: string): Promise<Menu[]> {
+  async getMenuItemsByName(@Param('category') category: string): Promise<Menu[]> {
     return this.menuService.getMenuItemsByCategory(category);
   }
 
