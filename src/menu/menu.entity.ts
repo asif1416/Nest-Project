@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { CartItem } from 'src/cart/cartItem.entity';
 
 @Entity()
 export class Menu {
@@ -6,17 +7,20 @@ export class Menu {
   id: number;
 
   @Column()
-  name: string;  
+  name: string;
 
   @Column()
-  description: string;  
+  description: string;
 
   @Column()
-  price: number; 
+  price: number;
 
   @Column()
-  category: string;  
+  category: string;
 
   @Column({ default: true })
-  available: boolean; 
+  available: boolean;
+
+  @OneToMany(() => CartItem, (cartItem) => cartItem.menu)
+  cartItems: CartItem[];
 }

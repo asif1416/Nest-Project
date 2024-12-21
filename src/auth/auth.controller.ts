@@ -53,13 +53,12 @@ export class AuthController {
   @Post('/send-otp')
   async sendOTP(
     @Body() { email }: { email: string },
-    @Res() response: Response,
   ) {
     await this.authService.generateAndSendOTP(email);
 
-    return response.status(200).json({
+    return {
       message: 'OTP sent successfully. Please check your email.',
-    });
+    };
   }
 
   @Public()
