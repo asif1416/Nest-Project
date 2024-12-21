@@ -23,15 +23,6 @@ import { MailerModule } from '@nestjs-modules/mailer';
       synchronize: true,
       
     }),
-    MailerModule.forRoot({
-      transport: {
-        host: 'smtp.gmail.com', 
-        auth: {
-          user: "ashrafulasif260@gmail.com",
-          pass: "ucii ijkj xvsg ivzn",
-        },
-      },
-    }),
     CustomerModule,
     JwtModule.register({
       global: true,

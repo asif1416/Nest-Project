@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, BeforeInsert, BeforeUpdate } from 'typeorm';
 import { Customer } from 'src/customer/customer.entity';
 import { Menu } from 'src/menu/menu.entity';
 
@@ -19,14 +19,18 @@ export class Order {
   customer: Customer;
 
   @Column()
-  totalPrice: number;  
+  totalPrice: number;
 
   @Column({ default: 'pending' })
-  status: string; 
-  
+  status: string;
+
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   startTime: Date;
 
-  @Column({ type: 'timestamp', nullable: true })
+  @Column({ type: 'timestamp' })
   endTime: Date;
+
 }
