@@ -120,4 +120,29 @@ export class CartService {
 
     await this.cartItemRepository.remove(cart.items);
   }
+
+  async updateCart(customerId: number, menuId: number, quantity: number): Promise<CartItem> {
+    const cart = await this.cartRepository.findOne({
+      where: { customer: { id: customerId } },
+      relations: ['items', 'items.menu'],
+    });
+
+    if (!cart) {
+      throw new NotFoundException('Cart not found');
+    }
+
+    const cartItem = await this.cartItemRepository.findOne({
+      where: { cart: { id: cart.id }, menu: { id: menuId } },
+      relations: ['menu'],
+    });
+
+    if (!cartItem) {
+      throw new NotFoundException('Item not found in cart');
+    }
+
+    cartItem.quantity = quantity;
+    cartItem.totalPrice = quantity * cartItem.menu.price;
+
+    return this.cartItemRepository.save(cartItem);
+  }
 }

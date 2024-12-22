@@ -22,18 +22,3 @@ export class CreateOrderDto {
   @IsDateString()
   endTime?: string; 
 }
-
-export class UpdateOrderDto {
-  @IsOptional()
-  @IsPositive()
-  quantity?: number;
-
-  @IsOptional()
-  @IsDateString()
-  startTime?: string;
-
-  @IsOptional()
-  @IsDateString()
-  endTime?: string;
-}
-

@@ -4,9 +4,7 @@ import { Repository } from 'typeorm';
 import { Order } from './order.entity';
 import { MenuService } from '../menu/menu.service';
 import { CustomerService } from './../customer/customer.service';
-import { UpdateOrderDto } from './order.dto';
 import { MailerService } from '@nestjs-modules/mailer';
-import { time } from 'console';
 
 @Injectable()
 export class OrderService {
@@ -119,18 +117,4 @@ export class OrderService {
     return order;
   }
 
-  async updateOrder(
-    orderId: number,
-    updateData: UpdateOrderDto,
-  ): Promise<Order> {
-    const order = await this.orderRepository.findOne({
-      where: { id: orderId },
-    });
-    if (!order) {
-      throw new NotFoundException('Order not found');
-    }
-
-    Object.assign(order, updateData);
-    return this.orderRepository.save(order);
-  }
 }

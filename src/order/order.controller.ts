@@ -9,7 +9,7 @@ import {
   Patch,
 } from '@nestjs/common';
 import { OrderService } from './order.service';
-import { CreateOrderDto, UpdateOrderDto } from './order.dto';
+import { CreateOrderDto } from './order.dto';
 
 @Controller('order')
 export class OrderController {
@@ -74,22 +74,4 @@ export class OrderController {
     }
   }
 
-  @Patch('/orders/:id')
-  async updateOrder(
-    @Param('id', ParseIntPipe) orderId: number,
-    @Body() updateData: UpdateOrderDto,
-  ) {
-    try {
-      const order = await this.orderService.updateOrder(orderId, updateData);
-      return {
-        message: 'Order updated successfully',
-        order
-      }
-    } catch (error) {
-      if (error instanceof NotFoundException) {
-        throw error;
-      }
-      throw new Error('Failed to update order');
-    }
-  }
 }

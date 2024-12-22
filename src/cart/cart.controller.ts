@@ -1,23 +1,14 @@
-import { Controller, Post, Body, Get, Param, Delete } from '@nestjs/common';
+import { Controller, Post, Body, Get, Param, Delete, Patch } from '@nestjs/common';
 import { CartService } from './cart.service';
+import { AddToCartDto, UpdateCartDto, RemoveFromCartDto } from './cart.dto';
 
 @Controller('cart')
 export class CartController {
   constructor(private readonly cartService: CartService) {}
 
   @Post('/add')
-  async addToCart(
-    @Body()
-    {
-      customerId,
-      menuId,
-      quantity,
-    }: {
-      customerId: number;
-      menuId: number;
-      quantity: number;
-    },
-  ) {
+  async addToCart(@Body() addToCartDto: AddToCartDto) {
+    const { customerId, menuId, quantity } = addToCartDto;
     await this.cartService.addToCart(customerId, menuId, quantity);
 
     return {
@@ -26,11 +17,9 @@ export class CartController {
   }
 
   @Delete('/remove')
-  async removeFromCart(
-    @Body()
-    { customerId, menuItemId }: { customerId: number; menuItemId: number },
-  ) {
-    await this.cartService.removeFromCart(customerId, menuItemId);
+  async removeFromCart(@Body() removeFromCartDto: RemoveFromCartDto) {
+    const { customerId, menuId } = removeFromCartDto;
+    await this.cartService.removeFromCart(customerId, menuId);
 
     return {
       message: 'Item removed from cart',
@@ -57,6 +46,17 @@ export class CartController {
 
     return {
       message: 'Cart cleared',
+    };
+  }
+
+  @Patch('/update')
+  async updateCart(@Body() updateCartDto: UpdateCartDto) {
+    const { customerId, menuId, quantity } = updateCartDto;
+    const updatedCart = await this.cartService.updateCart(customerId, menuId, quantity);
+
+    return {
+      message: 'Cart updated successfully',
+      updatedCart,
     };
   }
 }
