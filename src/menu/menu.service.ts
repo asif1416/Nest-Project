@@ -16,8 +16,8 @@ export class MenuService {
   }
 
   async searchMenu(name: string): Promise<Menu[]> {
-    if (name.length < 2) {
-      throw new NotFoundException('Search term must be at least 2 characters long');
+    if (name.length < 1) {
+      throw new NotFoundException('Search term must be at least 1 characters long');
     }
     return this.menuRepository.find({ where: { name: Like(`%${name}%`), available: true }, take: 10 });
   }

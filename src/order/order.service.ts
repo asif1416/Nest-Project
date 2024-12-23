@@ -28,7 +28,6 @@ export class OrderService {
             <div style="background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">
               <h2 style="text-align: center; color: #f49b33;">Order Receipt - Calinary Odissey</h2>
               <hr style="border: 1px solid #ddd;">
-              <p><strong>Order ID:</strong> ${order.id}</p>
               <p><strong>Customer Name:</strong> ${order.customer.name}</p>
               <p><strong>Email:</strong> ${email}</p>
               <hr style="border: 1px solid #ddd;">

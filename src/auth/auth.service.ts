@@ -121,7 +121,6 @@ export class AuthService {
     const currentTime = new Date().getTime();
     const lastResetTime = new Date(customer.lastReset).getTime();
 
-    // Check lockout status
     if (
       customer.attempt >= 5 &&
       currentTime - lastResetTime < lockoutDuration
@@ -131,7 +130,6 @@ export class AuthService {
       );
     }
 
-    // Check OTP request interval
     const otpInterval = 0.2 * 60 * 1000;
     if (currentTime - lastResetTime < otpInterval) {
       const timeLeft = Math.ceil(
@@ -142,16 +140,15 @@ export class AuthService {
       );
     }
 
-    //Maximum attempts check
     if (customer.attempt >= 5) {
       customer.lastReset = new Date();
+      customer.attempt = 0; 
       await this.customerRepository.save(customer);
       throw new UnauthorizedException(
         'Maximum attempts reached. Try again in 2 hours.',
       );
     }
 
-    // Generate OTP
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     customer.otp = parseInt(otp, 10);
     customer.attempt += 1;
@@ -173,7 +170,6 @@ export class AuthService {
 
     if (customer.otp !== otp) {
       await this.customerRepository.save(customer);
-
       throw new BadRequestException('Invalid OTP.');
     }
 

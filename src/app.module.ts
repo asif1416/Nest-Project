@@ -7,6 +7,8 @@ import { MenuModule } from './menu/menu.module';
 import { OrderModule } from './order/order.module';
 import { CartModule } from './cart/cart.module';
 import { MailerModule } from '@nestjs-modules/mailer';
+import { PaymentModule } from './payment/payment.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
@@ -15,6 +17,7 @@ import { MailerModule } from '@nestjs-modules/mailer';
     MenuModule,
     OrderModule,
     CartModule,
+    PaymentModule,
     MailerModule.forRoot({
       transport: {
         host: 'smtp.gmail.com',
@@ -23,6 +26,9 @@ import { MailerModule } from '@nestjs-modules/mailer';
           pass: 'ucii ijkj xvsg ivzn',
         },
       },
+    }),
+    ConfigModule.forRoot({
+      isGlobal: true, 
     }),
   ],
   controllers: [AppController],
