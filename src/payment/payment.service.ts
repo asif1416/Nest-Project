@@ -95,55 +95,6 @@ export class PaymentService {
       .catch((err) => err);
   }
 
-  async initiateRefund(data: any, url: string = this.refundURL): Promise<any> {
-    const refundURL = `${url}refund_amount=${data.refund_amount}&refund_remarks=${data.refund_remarks}&bank_tran_id=${data.bank_tran_id}&refe_id=${data.refe_id}&store_id=${this.store_id}&store_passwd=${this.store_passwd}&v=1&format=json`;
-
-    return fetch(refundURL, {
-      method: 'GET',
-    })
-      .then((response) => response.json())
-      .catch((err) => err);
-  }
-
-  async refundQuery(
-    data: any,
-    url: string = this.refundQueryURL,
-  ): Promise<any> {
-    const refundQueryURL = `${url}refund_ref_id=${data.refund_ref_id}&store_id=${this.store_id}&store_passwd=${this.store_passwd}&v=1&format=json`;
-
-    return fetch(refundQueryURL, {
-      method: 'GET',
-    })
-      .then((response) => response.json())
-      .catch((err) => err);
-  }
-
-  async transactionQueryBySessionId(
-    data: any,
-    url: string = this.transactionQueryBySessionIdURL,
-  ): Promise<any> {
-    const sessionQueryURL = `${url}sessionkey=${data.sessionkey}&store_id=${this.store_id}&store_passwd=${this.store_passwd}&v=1&format=json`;
-
-    return fetch(sessionQueryURL, {
-      method: 'GET',
-    })
-      .then((response) => response.json())
-      .catch((err) => err);
-  }
-
-  async transactionQueryByTransactionId(
-    data: any,
-    url: string = this.transactionQueryByTransactionIdURL,
-  ): Promise<any> {
-    const transactionQueryURL = `${url}tran_id=${data.tran_id}&store_id=${this.store_id}&store_passwd=${this.store_passwd}&v=1&format=json`;
-
-    return fetch(transactionQueryURL, {
-      method: 'GET',
-    })
-      .then((response) => response.json())
-      .catch((err) => err);
-  }
-
   async paymentSuccess(data: any) {
     console.log('Payment Success Data:', data); 
 

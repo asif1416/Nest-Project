@@ -130,7 +130,7 @@ export class AuthService {
       );
     }
 
-    const otpInterval = 0.2 * 60 * 1000;
+    const otpInterval =  15 * 1000;
     if (currentTime - lastResetTime < otpInterval) {
       const timeLeft = Math.ceil(
         (otpInterval - (currentTime - lastResetTime)) / 1000,

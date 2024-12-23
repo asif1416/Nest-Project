@@ -16,30 +16,6 @@ export class PaymentController {
     return await this.sslCommerzPaymentService.validate({ val_id });
   }
 
-  @Get('refund')
-  async refundPayment(@Body() data: any) {
-    return await this.sslCommerzPaymentService.initiateRefund(data);
-  }
-
-  @Get('refund-query')
-  async queryRefund(@Body() data: any) {
-    return await this.sslCommerzPaymentService.refundQuery(data);
-  }
-
-  @Get('transaction-query-session')
-  async queryTransactionBySessionId(@Body() data: any) {
-    return await this.sslCommerzPaymentService.transactionQueryBySessionId(
-      data,
-    );
-  }
-
-  @Get('transaction-query-id')
-  async queryTransactionByTransactionId(@Body() data: any) {
-    return await this.sslCommerzPaymentService.transactionQueryByTransactionId(
-      data,
-    );
-  }
-
   @Public()
   @Post('success')
   async paymentSuccess(@Req() req: any, @Res() res: any) {
